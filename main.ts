@@ -19,16 +19,20 @@ namespace ESP8266 {
     export function setWifi(ssid: string, pwd: string): void {
     	serial.writeLine("AT+RST");
     	serial.writeLine("AT+CWMODE=1");
-        serial.writeLine("AT+CWJAP=\""+ssid+"\",\""+pwd+"\"");
+        serial.writeLine("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"");
     }
 
 	// -------------- 3. Cloud ----------------
     //% blockId=esp8266_set_thingspeak
-	//% block="Send ThingSpeak key %key| field1 %field1| field2 %field2"
+	//% block="Send ThingSpeak key %key| field1 %field1"
 	//% weight=70	
 	//% blockGap=7	
-    export function sendThingspeak(key: string, field1: number, field2: number): void {
-        serial.writeLine("(AT+thingspeak?key=" + key+"&field1="+field1+"&field2="+field2+")"); 
+    export function sendThingspeak(key: string, field1: number): void {
+    	let message = "/update?api_key=" + key + "&field1=" + field1 + "\r\nHost: api.thingspeak.com\r\n\r\n";
+    	serial.writeLine("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80");
+    	serial.writeLine("AT+CIPSEND=" + message.length);
+    	serial.writeLine("GET " + message);
+    	serial.writeLine("AT+CIPCLOSE");
     }
 	
     //% blockId=esp8266_set_ifttt
