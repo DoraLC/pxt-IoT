@@ -4,7 +4,7 @@ namespace ESP8266 {
 	
 	// -------------- 1. Initialization ----------------
     //%blockId=muselab_initialize_wifi
-    //%block="Initialize WiFi IoT Shield"
+    //%block="Initialize WiFi"
 	//% weight=90	
 	//% blockGap=7	
     export function initializeWifi(): void {
@@ -17,7 +17,9 @@ namespace ESP8266 {
 	//% weight=80		
 	//% blockGap=7	
     export function setWifi(ssid: string, pwd: string): void {
-        serial.writeLine("(AT+wifi?ssid="+ssid+"&pwd="+pwd+")"); 
+    	serial.writeLine("AT+RST");
+    	serial.writeLine("AT+CWMODE=1");
+        serial.writeLine("AT+CWJAP=\""+ssid+"\",\"+pwd+"\"");
     }
 
 	// -------------- 3. Cloud ----------------
