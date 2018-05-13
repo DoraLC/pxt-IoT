@@ -1,6 +1,6 @@
 {
     "name": "esp8266",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Blocks to use ESP8266 in Microbit",
     "license": "MIT",
     "dependencies": {
