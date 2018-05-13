@@ -3,7 +3,7 @@ namespace ESP8266 {
 	let flag = true;
 	
 	// -------------- 1. Initialization ----------------
-    //%blockId=muselab_initialize_wifi
+    //%blockId=esp8266_initialize_wifi
     //%block="Initialize WiFi"
 	//% weight=90	
 	//% blockGap=7	
@@ -12,7 +12,7 @@ namespace ESP8266 {
     }
 	
 	// -------------- 2. WiFi ----------------
-    //% blockId=muselab_set_wifi
+    //% blockId=esp8266_set_wifi
 	//% block="Set wifi to ssid %ssid| pwd %pwd"   
 	//% weight=80		
 	//% blockGap=7	
@@ -23,7 +23,7 @@ namespace ESP8266 {
     }
 
 	// -------------- 3. Cloud ----------------
-    //% blockId=muselab_set_thingspeak
+    //% blockId=esp8266_set_thingspeak
 	//% block="Send ThingSpeak key %key| field1 %field1| field2 %field2"
 	//% weight=70	
 	//% blockGap=7	
@@ -31,7 +31,7 @@ namespace ESP8266 {
         serial.writeLine("(AT+thingspeak?key=" + key+"&field1="+field1+"&field2="+field2+")"); 
     }
 	
-    //% blockId=muselab_set_ifttt
+    //% blockId=esp8266_set_ifttt
 	//% block="Send IFTTT key %key|event_name %event|value1 %value1|value2 %value2"
 	//% weight=60	
     export function sendIFTTT(key: string, eventname: string, value1: number, value2: number): void {
@@ -39,7 +39,7 @@ namespace ESP8266 {
     }
 	
 	// -------------- 4. Others ----------------
-	//% blockId=muselab_set_wifi_hotspot
+	//% blockId=esp8266_set_wifi_hotspot
 	//% block="Set hotspot to ssid %ssid| pwd %pwd"   
 	//% weight=58	
 	//% blockGap=7	
@@ -47,7 +47,7 @@ namespace ESP8266 {
         serial.writeLine("(AT+wifi_hotspot?ssid="+ssid+"&pwd="+pwd+")"); 
     }
 	
-    //%blockId=muselab_start_server
+    //%blockId=esp8266_start_server
     //%block="Start web listening"
 	//% weight=55	
     export function startWebServer(): void {
@@ -65,7 +65,7 @@ namespace ESP8266 {
 	// -------------- 5. Advanced Wifi ----------------
 	
 	//%subcategory=More
-    //%blockId=muselab_muse_mqtt
+    //%blockId=esp8266_muse_mqtt
     //%block="Connect to Muse MQTT server"
 	//% weight=44
 	//% blockGap=7	
@@ -78,7 +78,7 @@ namespace ESP8266 {
     }
 	
 	//%subcategory=More
-	//% blockId=muselab_general_mqtt
+	//% blockId=esp8266_general_mqtt
 	//% block="Connect MQTT server %host| port %port| client id %clientId| username %username| password %pwd"
 	//% weight=43
 	//% blockGap=7	
@@ -87,7 +87,7 @@ namespace ESP8266 {
     }
 	
 	//%subcategory=More
-    //%blockId=muselab_mqtt_publish
+    //%blockId=esp8266_mqtt_publish
     //% block="MQTT publish topic %topic| payload %payload"
 	//% weight=42	
 	//% blockGap=7	
@@ -96,7 +96,7 @@ namespace ESP8266 {
     }	
 	
 	//%subcategory=More
-    //%blockId=muselab_mqtt_subscribe
+    //%blockId=esp8266_mqtt_subscribe
     //% block="MQTT subscribe topic %topic"
 	//% weight=41	
     export function mqttSubscribe(topic: string): void {
@@ -106,7 +106,7 @@ namespace ESP8266 {
 	// -------------- 6. General ----------------		
 
 	//%subcategory=More
-    //%blockId=muselab_battery
+    //%blockId=esp8266_battery
     //%block="Get battery level"
 	//% weight=40
 	//% blockGap=7		
@@ -116,7 +116,7 @@ namespace ESP8266 {
     }	
 	
 	//%subcategory=More
-    //%blockId=muselab_version
+    //%blockId=esp8266_version
     //%block="Get firmware version"
 	//% weight=39	
 	//% blockGap=7		
@@ -125,7 +125,7 @@ namespace ESP8266 {
     }
 	
 	//%subcategory=More
-    //%blockId=muselab_at
+    //%blockId=esp8266_at
     //%block="Send AT command %command"
 	//% weight=30	
 	//% blockGap=7		
@@ -135,7 +135,7 @@ namespace ESP8266 {
     }
 	
 	//%subcategory=More
-    //%blockId=muselab_test
+    //%blockId=esp8266_test
     //%block="Send AT test"
 	//% weight=20	
 	//% blockGap=7		
@@ -144,7 +144,7 @@ namespace ESP8266 {
     }
 	
 	//%subcategory=More
-    //%blockId=muselab_deep_sleep
+    //%blockId=esp8266_deep_sleep
     //%block="Set deep sleep %second| second"
 	//% weight=15	
     export function setDeepSleep(second: number): void {
