@@ -61,46 +61,5 @@ namespace ESP8266 {
 		}
 		
     }
-	
-	// -------------- 5. Advanced Wifi ----------------
-	
-	//%subcategory=More
-    //%blockId=esp8266_muse_mqtt
-    //%block="Connect to Muse MQTT server"
-	//% weight=44
-	//% blockGap=7	
-    export function connectMuseMQTT(): void {
-        serial.writeLine("(AT+startMQTT?host=13.58.53.42&port=1883&clientId=100&username=omlxmgsy&password=AoGUfQNPkeSH)");
-		while(true) {
-			serial.writeLine("(AT+write_sensor_data?p0=" + pins.analogReadPin(AnalogPin.P0) + "&p1=" + pins.analogReadPin(AnalogPin.P1) + "&p2=" + pins.analogReadPin(AnalogPin.P2) + ")")
-			basic.pause(500)
-		}
-    }
-	
-	//%subcategory=More
-	//% blockId=esp8266_general_mqtt
-	//% block="Connect MQTT server %host| port %port| client id %clientId| username %username| password %pwd"
-	//% weight=43
-	//% blockGap=7	
-    export function connectgeneralMQTT(host: string, port: string, clientId: string, username: string, pwd: string): void {
-        serial.writeLine("(AT+startMQTT?host="+host+"&port="+port+"&clientId="+clientId+"&username="+username+"&password="+pwd+")");
-    }
-	
-	//%subcategory=More
-    //%blockId=esp8266_mqtt_publish
-    //% block="MQTT publish topic %topic| payload %payload"
-	//% weight=42	
-	//% blockGap=7	
-    export function mqttPublish(topic: string, payload: string): void {
-        serial.writeLine("(AT+mqttPub?topic="+topic+"&payload="+payload+")");
-    }	
-	
-	//%subcategory=More
-    //%blockId=esp8266_mqtt_subscribe
-    //% block="MQTT subscribe topic %topic"
-	//% weight=41	
-    export function mqttSubscribe(topic: string): void {
-        serial.writeLine("(AT+mqttSub?topic="+topic+")");
-    }	
 
 }
