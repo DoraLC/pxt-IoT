@@ -1,17 +1,14 @@
 {
     "name": "esp8266",
     "version": "1.0.0",
-    "description": "Blocks to use ESP8266 in PXT",
+    "description": "Blocks to use ESP8266 in Microbit",
     "license": "MIT",
     "dependencies": {
         "core": "*",
     },
     "files": [
-        "ns.ts",
-        "wifi.ts"
-    ],
-    "testFiles": [
-        "tests.ts"
+        "README.md",
+        "main.ts"
     ],
     "public": true
 }
