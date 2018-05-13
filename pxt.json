@@ -1,0 +1,17 @@
+{
+    "name": "pxt-esp8266",
+    "version": "1.0.0",
+    "description": "Blocks to use ESP8266 in PXT",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*",
+    },
+    "files": [
+        // "ns.ts",
+        "wifi.ts"
+    ],
+    "testFiles": [
+        "tests.ts"
+    ],
+    // "public": true
+}
