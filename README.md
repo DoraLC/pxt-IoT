@@ -1,6 +1,6 @@
 # esp8266
 
-Blocks to use ESP8266 in Microbit
+ESP8266 for Microbit
 
 ## License
 
