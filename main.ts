@@ -102,53 +102,5 @@ namespace ESP8266 {
     export function mqttSubscribe(topic: string): void {
         serial.writeLine("(AT+mqttSub?topic="+topic+")");
     }	
-	
-	// -------------- 6. General ----------------		
-
-	//%subcategory=More
-    //%blockId=esp8266_battery
-    //%block="Get battery level"
-	//% weight=40
-	//% blockGap=7		
-	
-    export function sendBattery(): void {
-        serial.writeLine("(AT+battery)");
-    }	
-	
-	//%subcategory=More
-    //%blockId=esp8266_version
-    //%block="Get firmware version"
-	//% weight=39	
-	//% blockGap=7		
-    export function sendVersion(): void {
-        serial.writeLine("(AT+version)");
-    }
-	
-	//%subcategory=More
-    //%blockId=esp8266_at
-    //%block="Send AT command %command"
-	//% weight=30	
-	//% blockGap=7		
-    export function sendAT(command: string): void {
-        serial.writeLine(command);
-		flag = false
-    }
-	
-	//%subcategory=More
-    //%blockId=esp8266_test
-    //%block="Send AT test"
-	//% weight=20	
-	//% blockGap=7		
-    export function sendTest(): void {
-        serial.writeLine("(AT+testing)");
-    }
-	
-	//%subcategory=More
-    //%blockId=esp8266_deep_sleep
-    //%block="Set deep sleep %second| second"
-	//% weight=15	
-    export function setDeepSleep(second: number): void {
-        serial.writeLine("(AT+deepsleep?time="+second+")");
-    }	
 
 }
