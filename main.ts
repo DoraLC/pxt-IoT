@@ -19,7 +19,7 @@ namespace ESP8266 {
     export function setWifi(ssid: string, pwd: string): void {
     	serial.writeLine("AT+RST");
     	serial.writeLine("AT+CWMODE=1");
-        serial.writeLine("AT+CWJAP=\""+ssid+"\",\"+pwd+"\"");
+        serial.writeLine("AT+CWJAP=\""+ssid+"\",\""+pwd+"\"");
     }
 
 	// -------------- 3. Cloud ----------------
