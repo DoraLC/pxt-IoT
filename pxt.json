@@ -7,7 +7,7 @@
         "core": "*",
     },
     "files": [
-        // "ns.ts",
+        "ns.ts",
         "wifi.ts"
     ],
     "testFiles": [
