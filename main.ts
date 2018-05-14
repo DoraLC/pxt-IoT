@@ -18,6 +18,8 @@ namespace ESP8266 {
     	serial.writeString("AT+RST\r\n");
     	serial.writeString("AT+CWMODE=1\r\n");
         serial.writeString("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"\r\n");
+        while (serial.readUntil("\r\n")){
+    	}
     }
 
 	// -------------- 3. Cloud ----------------
@@ -37,6 +39,8 @@ namespace ESP8266 {
     	basic.pause(100);
     	serial.writeString("AT+CIPCLOSE\r\n");
     	basic.pause(100);
+    	while (serial.readUntil("\r\n")){
+    	}
     }
 	
     //% blockId=esp8266_set_ifttt
@@ -54,6 +58,8 @@ namespace ESP8266 {
     	basic.pause(100);
     	serial.writeString("AT+CIPCLOSE\r\n");
     	basic.pause(100);
+    	while (serial.readUntil("\r\n")){
+    	}
     }
 
 }
