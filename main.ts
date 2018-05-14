@@ -18,7 +18,7 @@ namespace ESP8266 {
     	serial.writeString("AT+RST\r\n");
     	serial.writeString("AT+CWMODE=1\r\n");
         serial.writeString("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"\r\n");
-        while (serial.readString()){
+        while (serial.readString() !== null){
     	}
     }
 
