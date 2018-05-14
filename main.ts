@@ -43,15 +43,16 @@ namespace ESP8266 {
 	//% block="Send IFTTT key %key|event_name %eventname|value1 %value1|value2 %value2"
 	//% weight=60	
     export function sendIFTTT(key: string, eventname: string, value1: number, value2: number): void {
-    	let message = "GET /trigger/" + eventname + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + "\r\n\r\n";
+    	//let message = "GET /trigger/" + eventname + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + "\r\n\r\n";
+    	let url = "maker.ifttt.com/trigger/" + eventname + "with/key/" + key + "?value1=" + value1 + "&value2=" + value2;
        	serial.writeString("AT+CIPMUX=0\r\n");
        	basic.pause(100);
-    	serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
+    	serial.writeString("AT+CIPSTART=\"TCP\",\""+url+"\",80\r\n");
     	basic.pause(100);
-    	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
-    	basic.pause(100);
-    	serial.writeString(message);
-    	basic.pause(100);
+    	//serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
+    	//basic.pause(100);
+    	//serial.writeString(message);
+    	//basic.pause(100);
     	serial.writeString("AT+CIPCLOSE\r\n");
     	basic.pause(100);
     }
