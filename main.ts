@@ -28,9 +28,13 @@ namespace ESP8266 {
     export function sendThingspeak(key: string, field1: number): void {
     	let message = "/update?api_key=" + key + "&field1=" + field1 + "\r\nHost: api.thingspeak.com\r\n\r\n";
     	serial.writeString("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80\r\n");
+    	basic.pause(100)
     	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
+    	basic.pause(100)
     	serial.writeString("GET " + message);
+    	basic.pause(100)
     	serial.writeString("AT+CIPCLOSE\r\n");
+    	basic.pause(100)
     }
 	
     //% blockId=esp8266_set_ifttt
@@ -39,9 +43,13 @@ namespace ESP8266 {
     export function sendIFTTT(key: string, eventname: string, value1: number, value2: number): void {
     	let message = "/trigger/" + eventname + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + "\r\nHost: maker.ifttt.com\r\n\r\n";
     	serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
+    	basic.pause(100)
     	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
+    	basic.pause(100)
     	serial.writeString("GET " + message);
+    	basic.pause(100)
     	serial.writeString("AT+CIPCLOSE\r\n");
+    	basic.pause(100)
     }
 
 }
