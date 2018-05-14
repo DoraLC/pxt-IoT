@@ -42,6 +42,28 @@ namespace ESP8266 {
         serial.writeLine("(AT+ifttt?key=" + key+"&event="+eventname+"&value1="+value1+"&value2="+value2+")"); 
     }
 	
-
+	// -------------- 4. Others ----------------
+	//% blockId=esp8266_set_wifi_hotspot
+	//% block="Set hotspot to ssid %ssid| pwd %pwd"   
+	//% weight=58	
+	//% blockGap=7	
+    export function setWifiHotspot(ssid: string, pwd: string): void {
+        serial.writeLine("(AT+wifi_hotspot?ssid="+ssid+"&pwd="+pwd+")"); 
+    }
+	
+    //%blockId=esp8266_start_server
+    //%block="Start web listening"
+	//% weight=55	
+    export function startWebServer(): void {
+		flag = true
+		serial.writeLine("(AT+startWebServer)")
+		while(flag) {
+			serial.writeLine("(AT+write_sensor_data?p0=" + pins.analogReadPin(AnalogPin.P0) + "&p1=" + pins.analogReadPin(AnalogPin.P1) + "&p2=" + pins.analogReadPin(AnalogPin.P2) + ")")
+			basic.pause(500)
+			if(!flag)
+				break;
+		}
+		
+    }
 
 }
