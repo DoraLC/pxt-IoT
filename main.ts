@@ -17,9 +17,9 @@ namespace ESP8266 {
 	//% weight=80		
 	//% blockGap=7	
     export function setWifi(ssid: string, pwd: string): void {
-    	serial.writeLine("AT+RST");
-    	serial.writeLine("AT+CWMODE=1");
-        serial.writeLine("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"");
+    	serial.writeString("AT+RST\r\n");
+    	serial.writeString("AT+CWMODE=1\r\n");
+        serial.writeString("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"\r\n");
     }
 
 	// -------------- 3. Cloud ----------------
