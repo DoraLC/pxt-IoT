@@ -1,6 +1,6 @@
 # esp8266
 
-ESP-8266 for Microbit
+ESP8266 for Microbit
 
 ## License
 
