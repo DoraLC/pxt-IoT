@@ -1,7 +1,5 @@
 //% weight=100 color=#F59E20 icon="\uf1eb" block="esp8266"
 namespace ESP8266 {
-	let flag = true;
-	
 	// -------------- 1. Initialization ----------------
     //%blockId=esp8266_initialize_wifi
     //%block="Initialize WiFi"
@@ -29,17 +27,21 @@ namespace ESP8266 {
 	//% blockGap=7	
     export function sendThingspeak(key: string, field1: number): void {
     	let message = "/update?api_key=" + key + "&field1=" + field1 + "\r\nHost: api.thingspeak.com\r\n\r\n";
-    	serial.writeLine("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80");
-    	serial.writeLine("AT+CIPSEND=" + message.length);
-    	serial.writeLine("GET " + message);
-    	serial.writeLine("AT+CIPCLOSE");
+    	serial.writeString("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80\r\n");
+    	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
+    	serial.writeString("GET " + message);
+    	serial.writeString("AT+CIPCLOSE\r\n");
     }
 	
     //% blockId=esp8266_set_ifttt
 	//% block="Send IFTTT key %key|event_name %event|value1 %value1|value2 %value2"
 	//% weight=60	
     export function sendIFTTT(key: string, eventname: string, value1: number, value2: number): void {
-        serial.writeLine("(AT+ifttt?key=" + key+"&event="+eventname+"&value1="+value1+"&value2="+value2+")"); 
+    	let message = "/trigger/" + event_name + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + "\r\nHost: maker.ifttt.com\r\n\r\n";
+    	serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
+    	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
+    	serial.writeString("GET " + message);
+    	serial.writeString("AT+CIPCLOSE\r\n");
     }
 
 }
