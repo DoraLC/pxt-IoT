@@ -42,7 +42,7 @@ namespace ESP8266 {
         let message = "GET /trigger/" + eventname + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + " HTTP/1.1\r\nHost: maker.ifttt.com\r\nConnection: close\r\n\r\n";
         serial.writeString("AT+CIPMUX=0\r\n");
         serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
-        basic.pause(500);
+        basic.pause(1000);
         serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
         serial.writeString(message);
         serial.writeString("AT+CIPCLOSE\r\n");
