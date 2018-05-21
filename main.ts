@@ -36,9 +36,10 @@ namespace ESP8266 {
     }
 	
     //% blockId=esp8266_init_ifttt
-    //% block="Send IFTTT"
+    //% block="Initialize IFTTT"
     //% weight=60   
     export function initializeIFTTT(): void {
+        basic.pause(1000);
         serial.writeString("AT+CIPMUX=0\r\n");
         serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
     }
