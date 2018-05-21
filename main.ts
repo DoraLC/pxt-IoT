@@ -35,16 +35,24 @@ namespace ESP8266 {
     	serial.writeString("AT+CIPCLOSE\r\n");
     }
 	
+    //% blockId=esp8266_init_ifttt
+    //% block="Send IFTTT"
+    //% weight=60   
+    export function initializeIFTTT(): void {
+        serial.writeString("AT+CIPMUX=0\r\n");
+        serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
+    }
+
     //% blockId=esp8266_set_ifttt
 	//% block="Send IFTTT key %key|event_name %eventname|value1 %value1|value2 %value2"
 	//% weight=60	
     export function sendIFTTT(key: string, eventname: string, value1: number, value2: number): void {
     	let message = "GET /trigger/" + eventname + "/with/key/" + key + "?value1=" + value1 + "&value2=" + value2 + " HTTP/1.1\r\nHost: maker.ifttt.com\r\nConnection: close\r\n\r\n";
-       	serial.writeString("AT+CIPMUX=0\r\n");
-    	serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
+       	// serial.writeString("AT+CIPMUX=0\r\n");
+    	// serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
     	serial.writeString("AT+CIPSEND=" + message.length + "\r\n");
     	serial.writeString(message);
-    	serial.writeString("AT+CIPCLOSE\r\n");
+    	// serial.writeString("AT+CIPCLOSE\r\n");
     }
 
 }
