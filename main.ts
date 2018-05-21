@@ -7,7 +7,7 @@ namespace ESP8266 {
 	//% blockGap=7	
     export function initializeWifi(): void {
         serial.redirect(SerialPin.P16,SerialPin.P8,BaudRate.BaudRate115200);
-        serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
+        // serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
     }
 	
 	// -------------- 2. WiFi ----------------
