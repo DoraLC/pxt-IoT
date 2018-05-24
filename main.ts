@@ -7,6 +7,7 @@ namespace ESP8266 {
     //% tx.fieldOptions.tooltips="false"
     //% rx.fieldEditor="gridpicker" rx.fieldOptions.columns=3
     //% rx.fieldOptions.tooltips="false"
+    //% weight=60   
     export function initializeWifi(tx: SerialPin, rx:SerialPin): void {
         serial.redirect(tx,rx,BaudRate.BaudRate115200);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
@@ -26,8 +27,7 @@ namespace ESP8266 {
     // -------------- 3. Cloud ----------------
     //% blockId=esp8266_set_thingspeak
     //% block="Send ThingSpeak key %key| field1 %field1"
-    //% weight=70   
-    //% blockGap=7  
+    //% weight=70
     export function sendThingspeak(key: string, field1: number): void {
         let message = "GET /update?api_key=" + key + "&field1=" + field1 + "\r\n\r\n";
         serial.writeString("AT+CIPMUX=0\r\n");
