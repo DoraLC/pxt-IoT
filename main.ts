@@ -7,7 +7,6 @@ namespace ESP8266 {
     //% tx.fieldOptions.tooltips="false"
     //% rx.fieldEditor="gridpicker" rx.fieldOptions.columns=3
     //% rx.fieldOptions.tooltips="false"
-    //% weight=60   
     export function initializeWifi(tx: SerialPin, rx:SerialPin): void {
         serial.redirect(tx,rx,BaudRate.BaudRate115200);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
