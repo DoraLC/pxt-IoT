@@ -2,11 +2,13 @@
 namespace ESP8266 {
     // -------------- 1. Initialization ----------------
     //%blockId=esp8266_initialize_wifi
-    //%block="Initialize WiFi"
-    //% weight=90   
-    //% blockGap=7  
-    export function initializeWifi(): void {
-        serial.redirect(SerialPin.P16,SerialPin.P8,BaudRate.BaudRate115200);
+    //%block="Initialize WiFi TX %tx|RX %rx"
+    //% tx.fieldEditor="gridpicker" tx.fieldOptions.columns=3
+    //% tx.fieldOptions.tooltips="false"
+    //% rx.fieldEditor="gridpicker" rx.fieldOptions.columns=3
+    //% rx.fieldOptions.tooltips="false"
+    export function initializeWifi(tx: SerialPin, rx:SerialPin): void {
+        serial.redirect(tx,rx,BaudRate.BaudRate115200);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
     }
     
