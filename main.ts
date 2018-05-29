@@ -1,6 +1,9 @@
 //% weight=100 color=#F59E20 icon="\uf1eb" block="esp8266"
 namespace ESP8266 {
     // -------------- Initialization ----------------
+    /**
+     * Initialize the TX and RX pins for connecting WiFi Module.
+    */
     //%blockId=esp8266_initialize_wifi
     //%block="Initialize WiFi TX %tx|RX %rx"
     //% tx.fieldEditor="gridpicker" tx.fieldOptions.columns=3
@@ -15,8 +18,11 @@ namespace ESP8266 {
     }
     
     // -------------- WiFi ----------------
+    /**
+     * Set the SSID and Password for the WiFi hotspot.
+    */
     //% blockId=esp8266_set_wifi
-    //% block="Set wifi to ssid %ssid| pwd %pwd"   
+    //% block="Set WiFi to ssid %ssid| pwd %pwd"   
     //% weight=81  
     //% blockGap=7  
     export function setWifi(ssid: string, pwd: string): void {
@@ -26,6 +32,9 @@ namespace ESP8266 {
     }
 
     // -------------- Cloud Services ----------------
+    /**
+     * Send single data to Thingspeak.
+    */
     //% blockId=esp8266_set_thingspeak
     //% block="Send ThingSpeak key %key| field1 %field1"
     //% weight=78
@@ -40,6 +49,9 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
+    /**
+     * Send an array of data (aka mutiple data) to Thingspeak.
+    */
     //% blockId=esp8266_set_thingspeak_list
     //% block="Send ThingSpeak key %key| array %fields"
     //% weight=77
@@ -62,6 +74,9 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
     
+    /**
+     * Send single data to IFTTT Event Trigger.
+    */
     //% blockId=esp8266_set_ifttt
     //% block="Send IFTTT key %key|event_name %eventname|value %value"
     //% weight=80   
@@ -76,6 +91,9 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
+    /**
+     * Send an array of data (aka mutiple data) to IFTTT Event Trigger.
+    */
     //% blockId=esp8266_set_ifttt_list
     //% block="Send IFTTT key %key|event_name %eventname|array %values"
     //% weight=79
