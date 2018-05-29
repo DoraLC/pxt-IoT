@@ -2,7 +2,7 @@
 namespace ESP8266 {
     // -------------- Initialization ----------------
     /**
-     * Initialize the TX and RX pins for connecting WiFi Module.
+     * Initialize the TX and RX pins for connecting the WiFi Module.
     */
     //%blockId=esp8266_initialize_wifi
     //%block="Initialize WiFi TX %tx|RX %rx"
@@ -19,7 +19,7 @@ namespace ESP8266 {
     
     // -------------- WiFi ----------------
     /**
-     * Set the SSID and Password for the WiFi hotspot.
+     * Set the SSID and Password for the WiFi Module to connect.
     */
     //% blockId=esp8266_set_wifi
     //% block="Set WiFi to ssid %ssid| pwd %pwd"   
@@ -33,7 +33,7 @@ namespace ESP8266 {
 
     // -------------- Cloud Services ----------------
     /**
-     * Send single data to Thingspeak.
+     * Send single data to ThingSpeak.
     */
     //% blockId=esp8266_set_thingspeak
     //% block="Send ThingSpeak key %key| field1 %field1"
@@ -50,7 +50,7 @@ namespace ESP8266 {
     }
 
     /**
-     * Send an array of data (aka mutiple data) to Thingspeak.
+     * Send an array of data (aka mutiple data) to ThingSpeak.
     */
     //% blockId=esp8266_set_thingspeak_list
     //% block="Send ThingSpeak key %key| array %fields"
