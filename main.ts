@@ -10,10 +10,13 @@ namespace ESP8266 {
     //% tx.fieldOptions.tooltips="false"
     //% rx.fieldEditor="gridpicker" rx.fieldOptions.columns=3
     //% rx.fieldOptions.tooltips="false"
+    //% baud.fieldEditor="gridpicker" baud.fieldOptions.columns=3
+    //% baud.fieldOptions.tooltips="false"
     //% weight=82
     //% blockGap=7  
-    export function initializeWifi(tx: SerialPin, rx:SerialPin): void {
-        serial.redirect(tx,rx,BaudRate.BaudRate115200);
+    export function initializeWifi(tx: SerialPin, rx:SerialPin, baud:BaudRate): void {
+        //serial.redirect(tx,rx,BaudRate.BaudRate115200);
+        serial.redirect(tx,rx,baud);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {});
     }
     
