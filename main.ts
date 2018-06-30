@@ -5,7 +5,7 @@ namespace ESP8266 {
      * Initialize the TX and RX pins for connecting the WiFi Module.
     */
     //%blockId=esp8266_initialize_wifi
-    //%block="Initialize WiFi TX %tx|RX %rx"
+    //%block="Initialize WiFi TX %tx|RX %rx|baud rate %baud"
     //% tx.fieldEditor="gridpicker" tx.fieldOptions.columns=3
     //% tx.fieldOptions.tooltips="false"
     //% rx.fieldEditor="gridpicker" rx.fieldOptions.columns=3
@@ -13,7 +13,7 @@ namespace ESP8266 {
     //% baud.fieldEditor="gridpicker" baud.fieldOptions.columns=3
     //% baud.fieldOptions.tooltips="false"
     //% weight=82
-    //% blockGap=7  
+    //% blockGap=7 
     export function initializeWifi(tx: SerialPin, rx:SerialPin, baud:BaudRate): void {
         //serial.redirect(tx,rx,BaudRate.BaudRate115200);
         serial.redirect(tx,rx,baud);
