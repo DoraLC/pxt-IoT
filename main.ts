@@ -30,11 +30,11 @@ namespace ESP8266 {
     //% blockGap=7  
     export function setWifi(ssid: string, pwd: string): void {
         serial.writeString("AT+RST\r\n");
-        basic.pause(100);
+        basic.pause(500);
         serial.writeString("AT+CWMODE=1\r\n");
-        basic.pause(100);
+        basic.pause(500);
         serial.writeString("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"\r\n");
-        basic.pause(100);
+        basic.pause(500);
     }
 
     // -------------- Cloud Services ----------------
