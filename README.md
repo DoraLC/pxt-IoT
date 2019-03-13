@@ -1,6 +1,9 @@
-# esp8266
+# IoT
 
-ESP8266 for Microbit
+IoT for Microbit using ESP01
+```package	
+modified from cdownsimon/pxt-esp8266	
+```
 
 ## License
 
@@ -12,5 +15,5 @@ MIT
 (The metadata above is needed for package search.)
 
 ```package
-esp8266=github:cdownsimon/pxt-esp8266
+IoT=github:DoraLC/pxt-IoT
 ```
