@@ -1,6 +1,13 @@
 //%color=#0B0B61 icon="\uf1eb" block="IoT"
 namespace ESP8266 {
 
+    enum optionYN{
+        //%block="YES"
+        yes=1,
+        //%block="NO"
+        no=0
+    }
+
     //% shim=ESP8266::setSerialBuffer
     function setSerialBuffer(size: number): void {
         return null;
@@ -49,25 +56,15 @@ namespace ESP8266 {
      * Set the SSID and Password for the WiFi Module to connect.
     */
     //% blockId=esp8266_set_wifi
-    //% block="Set WiFi to ssid %ssid| pwd %pwd"
+    //% block="Set WiFi to ssid %ssid| pwd %pwd | MQTT? %mqtton"
     //% weight=81
-    export function setWifi(ssid: string, pwd: string): void {
-        serial.writeString("AT+RST\r\n");
-        basic.pause(1500);
-        serial.writeString("AT+CWMODE=1\r\n");
-        basic.pause(100);
-        serial.writeString("AT+CWJAP=\"" + ssid + "\",\"" + pwd + "\"\r\n");
-        basic.pause(2000);
-    }
-
-    /**
-     * Set the SSID and Password for the WiFi Module to connect.
-    */
-    //% blockId=esp8266_set_wifi_for_mqtt
-    //% block="Set WiFi to ssid %ssid| pwd %pwd"
-    //% subcategory=MQTT
-    export function setWifiMQTT(ssid: string, pwd: string): void {
-        serial.writeString("AT+MQRST\r\n");
+    export function setWifi(ssid: string, pwd: string, mqtton: optionYN): void {
+        if (mqtton == 0){
+            serial.writeString("AT+RST\r\n");
+        }
+        else {
+            serial.writeString("AT+MQRST\r\n");
+        }
         basic.pause(1500);
         serial.writeString("AT+CWMODE=1\r\n");
         basic.pause(100);
