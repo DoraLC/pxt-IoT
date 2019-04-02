@@ -121,6 +121,7 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
+    //%block="test"
     export function testingMessage(key: string, fields: string[]): void {
         let message2 = "GET //test/ivan/iot/data_receive/?groupKey=" + key + "&";
         for (let i = 0; i < fields.length; i++) {
