@@ -21,36 +21,25 @@ namespace ESP8266 {
     export function initializeWifi(tx: SerialPin, rx: SerialPin, baudrate: BaudRate): void {
         serial.redirect(tx, rx, baudrate);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {
-            tmp = serial.readString()
-            if (tmp.compare("WIFI CONNECTED\r\n") == 0 && wificonn) {
+            serial_str = serial.readString()
+            if (serial_str.includes("WIFI CONNECTED\r\n") && wificonn) {
                 wificonnected()
             }
-            else if (tmp.compare("WIFI DISCONNECTED\r\n") == 0 && wifidisconn) {
+            if (serial_str.includes("WIFI DISCONNECTED\r\n") && wifidisconn) {
                 wifidisconnected()
             }
-            else if (tmp.substr(0, 4).compare("+MQD") == 0 && mqttOn) {
-                tmpstring = tmp.substr(4, tmp.length)
-                tmp = ""
-                for (let i = 0; i < tmpstring.length; i++) {
-                    if (tmpstring.charAt(i) == "\"") {
-                        count++
-                        if (count == 3) {
-                            for (let j = i + 1; j < tmpstring.length; j++) {
-                                if (tmpstring.charAt(j) == "\"") {
-                                    break
-                                }
-                                else {
-                                    tmp = tmp + tmpstring.charAt(j)
-                                }
-                            }
-                        }
-                    }
-                }
-                count = 0
-                mqttmessage(tmp)
+            if (serial_str.includes("+MQD") && mqttOn) {
+                let MQD_pos: number = serial.str.indexOf("+MQD")
+                let mqtt_str: string = serial_str.substr(MQD_pos)
+                mqttmessage(mqtt_str)
             }
-            else if (messaging){
-                tmpmessage(tmp)
+            if (serial_str.includes("AT+") && ATcommend){
+                let AT_pos: number = serial.str.indexOf("AT+")
+                let AT_str: string = serial_str.substr(AT_pos)
+                ATmessage(AT_str)
+            }
+            if (messaging){
+                tmpmessage(serial_str)
             }
         })
     }
@@ -185,9 +174,10 @@ namespace ESP8266 {
 
     // -------------- MQTT ----------------
 
-    let tmp = ""
+    let serial_str = ""
     let tmpstring = ""
     let count = 0
+    let ATcommend: boolean = false
     let wificonn = false
     let wifidisconn = false
     let messaging = false
@@ -198,8 +188,15 @@ namespace ESP8266 {
 
     let wificonnected: EvtAct = null
     let wifidisconnected: EvtAct = null
+    let ATmessage: EvtStr = null
     let tmpmessage: EvtStr = null
     let mqttmessage: EvtStr = null
+
+    //%block="AT message %topic"
+    export function ATreceive(topic: string, body: (ReceivedMessage: string) => void) {
+        ATcommend = true
+        ATmessage = body
+    }
 
     //%block="MQTT receive from topic %topic"
     //%subcategory=MQTT
