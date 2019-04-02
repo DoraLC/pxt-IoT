@@ -35,7 +35,7 @@ namespace ESP8266 {
             }
             if (serial_str.includes("AT+") && ATcommend){
                 let AT_pos: number = serial_str.indexOf("AT+")
-                let AT_str: string = serial_str.substr(AT_pos)
+                let AT_str: string = serial_str.substr(AT_pos, 32)
                 ATmessage(AT_str)
             }
             if (messaging){
