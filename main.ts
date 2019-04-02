@@ -193,14 +193,14 @@ namespace ESP8266 {
     let mqttmessage: EvtStr = null
 
     //%block="AT message"
-    export function ATreceive(body: (ReceivedMessage: string) => void) {
+    export function ATreceive(body: (ReceivedATMessage: string) => void) {
         ATcommend = true
         ATmessage = body
     }
 
     //%block="MQTT receive from topic %topic"
     //%subcategory=MQTT
-    export function mqttreceive(topic: string, body: (ReceivedMessage: string) => void) {
+    export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
         mqttOn = true
         mqttmessage = body
     }
