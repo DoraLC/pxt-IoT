@@ -2,10 +2,10 @@
 namespace ESP8266 {
 
     export enum optionYN{
-        //%block="YES"
-        yes=1,
         //%block="NO"
-        no=0
+        no=0,
+        //%block="YES"
+        yes=1
     }
 
     //% shim=ESP8266::setSerialBuffer
