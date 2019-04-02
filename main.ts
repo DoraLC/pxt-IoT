@@ -121,6 +121,27 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
+    export function testingMessage(key: string, fields: string[]): void {
+        let message2 = "GET //test/ivan/iot/data_receive/?groupKey=" + key + "&";
+        for (let i = 0; i < fields.length; i++) {
+            if (i == fields.length - 1) {
+                message2 = message2 + "valueAry[]" + (i + 1) + "=" + fields[i];
+            } else {
+                message2 = message2 + "valueAry[]" + (i + 1) + "=" + fields[i] + "&";
+            }
+        }
+        message2 = message2 + "\r\n\r\n";
+        serial.writeString("AT+CIPMUX=0\r\n");
+        basic.pause(500);
+        serial.writeString("AT+CIPSTART=\"TCP\",\"192.168.0.146\",31002\r\n");
+        basic.pause(1000);
+        serial.writeString("AT+CIPSEND=" + message2.length + "\r\n");
+        basic.pause(500);
+        serial.writeString(message2);
+        basic.pause(3000);
+        serial.writeString("AT+CIPCLOSE\r\n");
+    }
+
     /**
      * Send single data to IFTTT Event Trigger.
     */
