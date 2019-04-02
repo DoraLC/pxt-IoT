@@ -1,7 +1,7 @@
 //%color=#0B0B61 icon="\uf1eb" block="IoT"
 namespace ESP8266 {
 
-    enum optionYN{
+    export enum optionYN{
         //%block="YES"
         yes=1,
         //%block="NO"
