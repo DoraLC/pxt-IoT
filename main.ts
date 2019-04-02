@@ -29,12 +29,12 @@ namespace ESP8266 {
                 wifidisconnected()
             }
             if (serial_str.includes("+MQD") && mqttOn) {
-                let MQD_pos: number = serial.str.indexOf("+MQD")
+                let MQD_pos: number = serial_str.indexOf("+MQD")
                 let mqtt_str: string = serial_str.substr(MQD_pos)
                 mqttmessage(mqtt_str)
             }
             if (serial_str.includes("AT+") && ATcommend){
-                let AT_pos: number = serial.str.indexOf("AT+")
+                let AT_pos: number = serial_str.indexOf("AT+")
                 let AT_str: string = serial_str.substr(AT_pos)
                 ATmessage(AT_str)
             }
