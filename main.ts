@@ -37,7 +37,8 @@ namespace ESP8266 {
             }
             if (serial_str.includes("+MQD") && mqttOn) {
                 let MQD_pos: number = serial_str.indexOf("+MQD")
-                let mqtt_str: string = serial_str.substr(MQD_pos)
+                let mqtt_str: string = serial_str.substr(MQD_pos) // to be modified
+                mqtt_topic = serial_str.substr(MQD_pos + 3) // to be modified
                 mqttmessage(mqtt_str)
             }
             if (serial_str.includes("AT+") && ATcommend){
@@ -193,14 +194,13 @@ namespace ESP8266 {
 
     // -------------- MQTT ----------------
 
-    let serial_str = ""
-    let tmpstring = ""
-    let count = 0
+    let serial_str: string = ""
+    let mqtt_topic: string = ""
     let ATcommend: boolean = false
-    let wificonn = false
-    let wifidisconn = false
-    let messaging = false
-    let mqttOn = false
+    let wificonn: boolean = false
+    let wifidisconn: boolean = false
+    let messaging: boolean = false
+    let mqttOn: boolean = false
 
     type EvtStr = (data: string) => void;
     type EvtAct = () => void;
@@ -221,7 +221,9 @@ namespace ESP8266 {
     //%subcategory=MQTT
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
         mqttOn = true
-        mqttmessage = body
+        if (mqtt_topic == topic){
+            mqttmessage = body
+        }
     }
 
     //%block="Serial read message"
