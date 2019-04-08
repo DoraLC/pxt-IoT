@@ -13,6 +13,7 @@ namespace ESP8266 {
         return null;
     }
     setSerialBuffer(128);
+
     // -------------- Initialization ----------------
     /**
      * Initialize the TX and RX pins for connecting the WiFi Module.
@@ -192,7 +193,7 @@ namespace ESP8266 {
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
-    // -------------- MQTT ----------------
+    // -------------- MQTT & Event ----------------
 
     let serial_str: string = ""
     let mqtt_topic: string = ""
@@ -219,7 +220,7 @@ namespace ESP8266 {
 
     //%block="MQTT receive from topic %topic"
     //%subcategory=MQTT
-    //% draggableParameters
+    //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
         mqttOn = true
         if (mqtt_topic == topic){
