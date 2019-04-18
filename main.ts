@@ -1,13 +1,6 @@
 //%color=#0B0B61 icon="\uf1eb" block="IoT"
 namespace ESP8266 {
 
-    export enum optionYN{
-        //%block="NO"
-        no=0,
-        //%block="YES"
-        yes=1
-    }
-
     //% shim=ESP8266::setSerialBuffer
     function setSerialBuffer(size: number): void {
         return null;
@@ -59,9 +52,10 @@ namespace ESP8266 {
     */
     //% blockId=esp8266_set_wifi
     //% block="Set WiFi to ssid %ssid| pwd %pwd | MQTT? %mqtton"
+    //% mqtton.shadow="toggleOnOff"
     //% weight=81
-    export function setWifi(ssid: string, pwd: string, mqtton: optionYN): void {
-        if (mqtton == 0){
+    export function setWifi(ssid: string, pwd: string, mqtton: boolean): void {
+        if (mqtton){
             serial.writeString("AT+RST\r\n");
         }
         else {
