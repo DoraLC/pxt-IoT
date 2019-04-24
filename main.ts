@@ -57,7 +57,7 @@ namespace ESP8266 {
     export function setWifi(ssid: string, pwd: string, mqtton: boolean): void {
         serial.writeString("AT+RST\r\n");
         if (mqtton){
-            basic.pause(2000)
+            basic.pause(2000);
             serial.writeString("AT+MQRES\r\n");
         }
         basic.pause(1500);
