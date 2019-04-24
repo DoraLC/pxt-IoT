@@ -59,7 +59,7 @@ namespace ESP8266 {
             serial.writeString("AT+RST\r\n");
         }
         else {
-            serial.writeString("AT+MQRST\r\n");
+            serial.writeString("AT+MQRES\r\n");
         }
         basic.pause(1500);
         serial.writeString("AT+CWMODE=1\r\n");
@@ -245,16 +245,14 @@ namespace ESP8266 {
     //%block="MQTT send topic %topic| message %message"
     //%subcategory=MQTT
     export function mqttsend(topic: string, message: string): void {
-        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\"" + message + "\",0\r\n")
+        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\"" + message + "\",1\r\n")
         basic.pause(1000)
     }
 
     //%block="MQTT subscribe to topic %topic"
     //%subcategory=MQTT
     export function mqttsub(topic: string): void {
-        serial.writeString("AT+MQSUBSCRIBE=\"" + topic + "\",0\r\n")
-        basic.pause(500)
-        serial.writeString("AT+MQAUTOSUB=1,\"" + topic + "\",0\r\n")
+        serial.writeString("AT+MQSUBSCRIBE=\"" + topic + "\",1\r\n")
         basic.pause(1000)
     }
 
