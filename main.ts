@@ -236,7 +236,7 @@ namespace ESP8266 {
         basic.pause(1000)
         serial.writeString("AT+MQCLIENTID=\"" + ID + "\"\r\n")
         basic.pause(1000)
-        serial.writeString("AT+MQUSERPWD=\"" + name + "\",\"" + pwd + "\"\r\n")
+        serial.writeString("AT+USERPWD=\"" + name + "\",\"" + pwd + "\"\r\n")
         basic.pause(1000)
         serial.writeString("AT+MQSTART\r\n")
         basic.pause(3000)
