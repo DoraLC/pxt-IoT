@@ -230,7 +230,7 @@ namespace ESP8266 {
     //%block="MQTT connect server %server | port %port | ID %ID | user %name | password %pwd"
     //%blockExternalInputs=true
     //%subcategory=MQTT
-    export function mqttstart(server: string, port: number, ID: string, name: string, pwd: string): void {
+    export function mqttstart(server: string, port: string, ID: string, name: string, pwd: string): void {
         serial.writeString("AT+MQIPPORT=\"" + server + "\"," + port + "\r\n")
         basic.pause(1000)
         serial.writeString("AT+MQCLIENTID=\"" + ID + "\"\r\n")
