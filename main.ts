@@ -59,7 +59,6 @@ namespace ESP8266 {
             serial.writeString("AT+MQRES\r\n");
             basic.pause(1000);
             serial.writeString("AT+MQVER=4\r\n");
-            basic.pause(1000);
         }
         else {
             serial.writeString("AT+RST\r\n");
