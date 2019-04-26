@@ -209,6 +209,7 @@ namespace ESP8266 {
     let mqttmessage: EvtStr = null
 
     //%block="AT message"
+    //%draggableParameters
     export function ATreceive(body: (ReceivedATMessage: string) => void) {
         ATcommend = true
         ATmessage = body
@@ -225,6 +226,7 @@ namespace ESP8266 {
     }
 
     //%block="Serial read message"
+    //%draggableParameters
     export function messager(body: (message: string) => void) {
         messaging = true
         tmpmessage = body
