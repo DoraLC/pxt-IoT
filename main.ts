@@ -5,7 +5,7 @@ namespace ESP8266 {
     function setSerialBuffer(size: number): void {
         return null;
     }
-    setSerialBuffer(128);
+    setSerialBuffer(256);
 
     // -------------- Initialization ----------------
     /**
@@ -49,7 +49,7 @@ namespace ESP8266 {
             }
             if (mqttflag) {
                 let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic) + mqtt_topic.length
-                let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3, 64)
+                let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3, 128)
                 mqttmessage(mqttmeg);
                 mqttflag = false;
             }
