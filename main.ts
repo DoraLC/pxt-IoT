@@ -36,17 +36,23 @@ namespace ESP8266 {
                 mqttdisconnected();
             }
             if (serial_str.includes("+MQD") && mqttOn) {
+                let mqttTopic_pos: number = serial_str.indexOf("\"");
+                let mqttTopic_str: string;
+                for (let i = mqttTopic_pos; ; i++){
+                    mqttTopic_str += serial_str.charAt(i);
+                    if (serial_str.charAt(i) == "\"") break;
+                }
                 mqttflag = true;
             }
-            if (serial_str.includes("AT+") && ATcommend){
+            if (serial_str.includes("AT+") && ATcommend) {
                 let AT_pos: number = serial_str.indexOf("AT+");
                 let AT_str: string = serial_str.substr(AT_pos, 32); // to be modified
                 ATmessage(AT_str);
             }
-            if (messaging){
+            if (messaging) {
                 tmpmessage(serial_str);
             }
-            if(mqttflag){
+            if (mqttflag) {
                 mqttmessage(serial_str);
                 mqttflag = false;
             }
@@ -62,7 +68,7 @@ namespace ESP8266 {
     //% mqtton.shadow="toggleOnOff"
     //% weight=81
     export function setWifi(ssid: string, pwd: string, mqtton: boolean): void {
-        if (mqtton){
+        if (mqtton) {
             serial.writeString("AT+MQRES\r\n");
             basic.pause(1500);
             serial.writeString("AT+MQVER=4\r\n");
@@ -222,7 +228,7 @@ namespace ESP8266 {
 
     //%block="MQTT connected"
     //%subcategory=MQTT
-    export function MQTTconnected(body: () => void){
+    export function MQTTconnected(body: () => void) {
         mqttconn = true;
         mqttconnected = body;
     }
@@ -246,7 +252,7 @@ namespace ESP8266 {
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
         mqttOn = true;
-        if (mqtt_topic == topic){
+        if (mqtt_topic == topic) {
             mqttmessage = body;
         }
     }
