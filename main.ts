@@ -50,7 +50,7 @@ namespace ESP8266 {
             if (mqttflag) {
                 let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic)
                 let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3, )
-                mqttmessage(serial_str);
+                mqttmessage(mqttmeg);
                 mqttflag = false;
             }
         })
