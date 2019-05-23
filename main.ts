@@ -36,12 +36,7 @@ namespace ESP8266 {
                 mqttdisconnected();
             }
             if (serial_str.includes("+MQD") && mqttOn) {
-                let mqttTopic_pos: number = serial_str.indexOf("\"");
-                for (let i = mqttTopic_pos; ; i++){
-                    mqtt_topic += serial_str.charAt(i);
-                    if (serial_str.charAt(i) == "\"") break;
-                }
-                mqttflag = true;
+                if (serial_str.includes(mqtt_topic)) mqttflag = true;
             }
             if (serial_str.includes("AT+") && ATcommend) {
                 let AT_pos: number = serial_str.indexOf("AT+");
@@ -251,9 +246,9 @@ namespace ESP8266 {
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
         mqttOn = true;
-        if (mqtt_topic == topic) {
-            mqttmessage = body;
-        }
+        mqtt_topic = topic;
+        mqttmessage = body;
+
     }
 
     //%block="Serial read message"
