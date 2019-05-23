@@ -22,26 +22,33 @@ namespace ESP8266 {
     export function initializeWifi(tx: SerialPin, rx: SerialPin, baudrate: BaudRate): void {
         serial.redirect(tx, rx, baudrate);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {
-            serial_str = serial.readString()
+            serial_str = serial.readString();
             if (serial_str.includes("WIFI GOT IP\r\n") && wificonn) {
-                wificonnected()
+                wificonnected();
             }
             if (serial_str.includes("WIFI DISCONNECT\r\n") && wifidisconn) {
-                wifidisconnected()
+                wifidisconnected();
+            }
+            if (serial_str.includes("+MQSTATUS: MQTT CONNECTED\r\n") && mqttconn) {
+                mqttconnected();
+            }
+            if (serial_str.includes("+MQSTATUS:MQTT CLOSED\r\n") && mqttdisconn) {
+                mqttdisconnected();
             }
             if (serial_str.includes("+MQD") && mqttOn) {
-                let MQD_pos: number = serial_str.indexOf("+MQD")
-                let mqtt_str: string = serial_str.substr(MQD_pos) // to be modified
-                mqtt_topic = serial_str.substr(MQD_pos + 3) // to be modified
-                mqttmessage(mqtt_str)
+                mqttflag = true;
             }
             if (serial_str.includes("AT+") && ATcommend){
-                let AT_pos: number = serial_str.indexOf("AT+")
-                let AT_str: string = serial_str.substr(AT_pos, 32)// to be modified
-                ATmessage(AT_str)
+                let AT_pos: number = serial_str.indexOf("AT+");
+                let AT_str: string = serial_str.substr(AT_pos, 32); // to be modified
+                ATmessage(AT_str);
             }
             if (messaging){
-                tmpmessage(serial_str)
+                tmpmessage(serial_str);
+            }
+            if(mqttflag){
+                mqttmessage(serial_str);
+                mqttflag = false;
             }
         })
     }
@@ -151,13 +158,13 @@ namespace ESP8266 {
     export function sendIFTTT(key: string, eventname: string, value: string): void {
         let message3 = "GET /trigger/" + eventname + "/with/key/" + key + "?value1=" + value + " HTTP/1.1\r\nHost: maker.ifttt.com\r\nConnection: close\r\n\r\n";
         serial.writeString("AT+CIPMUX=0\r\n");
-        basic.pause(500)
+        basic.pause(500);
         serial.writeString("AT+CIPSTART=\"TCP\",\"maker.ifttt.com\",80\r\n");
         basic.pause(1000);
         serial.writeString("AT+CIPSEND=" + message3.length + "\r\n");
-        basic.pause(500)
+        basic.pause(500);
         serial.writeString(message3);
-        basic.pause(1000)
+        basic.pause(1000);
         serial.writeString("AT+CIPCLOSE\r\n");
     }
 
@@ -191,85 +198,109 @@ namespace ESP8266 {
 
     // -------------- MQTT & Event ----------------
 
-    let serial_str: string = ""
-    let mqtt_topic: string = ""
-    let ATcommend: boolean = false
-    let wificonn: boolean = false
-    let wifidisconn: boolean = false
-    let messaging: boolean = false
-    let mqttOn: boolean = false
+    let serial_str: string = "";
+    let mqtt_topic: string = "";
+    let ATcommend: boolean = false;
+    let wificonn: boolean = false;
+    let wifidisconn: boolean = false;
+    let mqttconn: boolean = false;
+    let mqttdisconn: boolean = false;
+    let messaging: boolean = false;
+    let mqttOn: boolean = false;
+    let mqttflag: boolean = false;
 
     type EvtStr = (data: string) => void;
     type EvtAct = () => void;
 
-    let wificonnected: EvtAct = null
-    let wifidisconnected: EvtAct = null
-    let ATmessage: EvtStr = null
-    let tmpmessage: EvtStr = null
-    let mqttmessage: EvtStr = null
+    let wificonnected: EvtAct = null;
+    let wifidisconnected: EvtAct = null;
+    let mqttconnected: EvtAct = null;
+    let mqttdisconnected: EvtAct = null;
+    let ATmessage: EvtStr = null;
+    let tmpmessage: EvtStr = null;
+    let mqttmessage: EvtStr = null;
+
+    //%block="MQTT connected"
+    //%subcategory=MQTT
+    export function MQTTconnected(body: () => void){
+        mqttconn = true;
+        mqttconnected = body;
+    }
+
+    //%block="MQTT disconnected"
+    //%subcategory=MQTT
+    export function MQTTdisconnected(body: () => void) {
+        mqttdisconn = true;
+        mqttdisconnected = body;
+    }
 
     //%block="AT message"
     //%draggableParameters
     export function ATreceive(body: (ReceivedATMessage: string) => void) {
-        ATcommend = true
-        ATmessage = body
+        ATcommend = true;
+        ATmessage = body;
     }
 
     //%block="MQTT receive from topic %topic"
     //%subcategory=MQTT
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
-        mqttOn = true
+        mqttOn = true;
         if (mqtt_topic == topic){
-            mqttmessage = body
+            mqttmessage = body;
         }
     }
 
     //%block="Serial read message"
     //%draggableParameters
     export function messager(body: (message: string) => void) {
-        messaging = true
-        tmpmessage = body
+        messaging = true;
+        tmpmessage = body;
     }
 
     //%block="MQTT connect server %server | port %port | ID %ID | user %name | password %pwd"
     //%blockExternalInputs=true
     //%subcategory=MQTT
     export function mqttstart(server: string, port: string, ID: string, name: string, pwd: string): void {
-        serial.writeString("AT+MQIPPORT=\"" + server + "\"," + port + "\r\n")
-        basic.pause(1000)
-        serial.writeString("AT+MQCLIENTID=\"" + ID + "\"\r\n")
-        basic.pause(1000)
-        serial.writeString("AT+MQUSERPWD=\"" + name + "\",\"" + pwd + "\"\r\n")
-        basic.pause(1000)
-        serial.writeString("AT+MQSTART\r\n")
-        basic.pause(3000)
+        serial.writeString("AT+MQIPPORT=\"" + server + "\"," + port + "\r\n");
+        basic.pause(1000);
+        serial.writeString("AT+MQCLIENTID=\"" + ID + "\"\r\n");
+        basic.pause(1000);
+        serial.writeString("AT+MQUSERPWD=\"" + name + "\",\"" + pwd + "\"\r\n");
+        basic.pause(1000);
+        serial.writeString("AT+RST\r\n");
+        basic.pause(5000);
+        serial.writeString("AT+MQSTART\r\n");
+        basic.pause(500);
     }
 
     //%block="MQTT send topic %topic| message %message"
     //%subcategory=MQTT
     export function mqttsend(topic: string, message: string): void {
-        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\"" + message + "\",1\r\n")
-        basic.pause(1000)
+        let strlen: number = message.length + 1;
+        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\"" + strlen + "\"\r\n");
+        basic.pause(500);
+        serial.writeString(message + "\"\r\n");
+        basic.pause(1000);
     }
 
     //%block="MQTT subscribe to topic %topic"
     //%subcategory=MQTT
     export function mqttsub(topic: string): void {
-        serial.writeString("AT+MQSUBSCRIBE=\"" + topic + "\",1\r\n")
-        basic.pause(1000)
+        serial.writeString("AT+MQSUBSCRIBE=\"" + topic + "\",1\r\n");
+        basic.pause(1000);
     }
 
     //%block="On Wifi connected"
     export function Wificonnected(body: () => void) {
-        wificonn = true
-        wificonnected = body
+        wificonn = true;
+        wificonnected = body;
     }
 
     //%block="On Wifi disconnected"
     export function Wifidisconnected(body: () => void) {
-        wifidisconn = true
-        wifidisconnected = body
+        wifidisconn = true;
+        wifidisconnected = body;
     }
 
     /** Convert a number to a string. */
@@ -277,7 +308,7 @@ namespace ESP8266 {
     //%block="number to string %target"
     //%weight=0
     export function make_string(target: number): string {
-        return target.toString()
+        return target.toString();
     }
 
 }
