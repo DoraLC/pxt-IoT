@@ -37,9 +37,8 @@ namespace ESP8266 {
             }
             if (serial_str.includes("+MQD") && mqttOn) {
                 let mqttTopic_pos: number = serial_str.indexOf("\"");
-                let mqttTopic_str: string;
                 for (let i = mqttTopic_pos; ; i++){
-                    mqttTopic_str += serial_str.charAt(i);
+                    mqtt_topic += serial_str.charAt(i);
                     if (serial_str.charAt(i) == "\"") break;
                 }
                 mqttflag = true;
