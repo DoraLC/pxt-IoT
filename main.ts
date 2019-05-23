@@ -23,6 +23,10 @@ namespace ESP8266 {
         serial.redirect(tx, rx, baudrate);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {
             serial_str = serial.readString();
+            if (mqttflag) {
+                mqttmessage(serial_str);
+                mqttflag = false;
+            }
             if (serial_str.includes("WIFI GOT IP\r\n") && wificonn) {
                 wificonnected();
             }
@@ -45,10 +49,6 @@ namespace ESP8266 {
             }
             if (messaging) {
                 tmpmessage(serial_str);
-            }
-            if (mqttflag) {
-                mqttmessage(serial_str);
-                mqttflag = false;
             }
         })
     }
