@@ -29,7 +29,7 @@ namespace ESP8266 {
             if (serial_str.includes("WIFI DISCONNECT\r\n") && wifidisconn) {
                 wifidisconnected();
             }
-            if (serial_str.includes("+MQSTATUS: MQTT CONNECTED\r\n") && mqttconn) {
+            if (serial_str.includes("+MQSTATUS:MQTT CONNECTED\r\n") && mqttconn) {
                 mqttconnected();
             }
             if (serial_str.includes("+MQSTATUS:MQTT CLOSED\r\n") && mqttdisconn) {
@@ -278,7 +278,7 @@ namespace ESP8266 {
     //%subcategory=MQTT
     export function mqttsend(topic: string, message: string): void {
         let strlen: number = message.length + 1;
-        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\"" + strlen + "\"\r\n");
+        serial.writeString("AT+MQPUBLISH=\"" + topic + "\",\" + strlen + \"\r\n");
         basic.pause(500);
         serial.writeString(message + "\"\r\n");
         basic.pause(1000);
