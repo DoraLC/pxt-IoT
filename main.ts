@@ -269,7 +269,7 @@ namespace ESP8266 {
         serial.writeString("AT+MQUSERPWD=\"" + name + "\",\"" + pwd + "\"\r\n");
         basic.pause(1000);
         serial.writeString("AT+RST\r\n");
-        basic.pause(5000);
+        basic.pause(10000);
         serial.writeString("AT+MQSTART\r\n");
         basic.pause(500);
     }
