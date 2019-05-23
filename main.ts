@@ -48,7 +48,7 @@ namespace ESP8266 {
                 tmpmessage(serial_str);
             }
             if (mqttflag) {
-                let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic)
+                let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic + mqtt_topic.length)
                 let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3, )
                 mqttmessage(mqttmeg);
                 mqttflag = false;
