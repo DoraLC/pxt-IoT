@@ -36,7 +36,7 @@ namespace ESP8266 {
             if (serial_str.includes("+MQSTATUS:MQTT CLOSED\r\n") && mqttdisconn) {
                 mqttdisconnected();
             }
-            if (serial_str.includes("+MQD") && mqttOn) {
+            if (serial_str.includes("+MQD")) {
                 for (let i = 1; i <= topic_index ; i++){
                     if (serial_str.includes(mqtt_topic_set[i])) {
                         mqttflag = true;
@@ -256,7 +256,7 @@ namespace ESP8266 {
     //%subcategory=MQTT
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void): void {
-        mqttOn = true;
+        //mqttOn = true;
         if (topic.compare(mqtt_topic) != 0) return;
         mqttmessage = body;
     }
