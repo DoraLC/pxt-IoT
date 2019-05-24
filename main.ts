@@ -37,7 +37,7 @@ namespace ESP8266 {
                 mqttdisconnected();
             }
             if (serial_str.includes("+MQD") && mqttOn) {
-                for (let i = 0; i <= topic_index ; i++){
+                for (let i = 1; i <= topic_index ; i++){
                     if (serial_str.includes(mqtt_topic_set[i])) {
                         mqttflag = true;
                         mqtt_topic = mqtt_topic_set[i];
