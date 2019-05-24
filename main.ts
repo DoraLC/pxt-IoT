@@ -22,7 +22,7 @@ namespace ESP8266 {
     export function initializeWifi(tx: SerialPin, rx: SerialPin, baudrate: BaudRate): void {
         serial.redirect(tx, rx, baudrate);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {
-            serial_str = serial.readLine();
+            serial_str = serial.readString();
 
             if (serial_str.includes("WIFI GOT IP\r\n") && wificonn) {
                 wificonnected();
@@ -57,7 +57,8 @@ namespace ESP8266 {
                 let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic) + mqtt_topic.length
                 let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3, 100)
                 //mqttmessage(mqttmeg);
-                mqttCallback(mqtt_topic, mqttmeg)
+                //mqttCallback(mqtt_topic, mqttmeg)
+                mqttCallback(mqtt_topic, serial_str)
                 mqttflag = false;
             }
         })
