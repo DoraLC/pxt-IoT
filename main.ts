@@ -37,11 +37,17 @@ namespace ESP8266 {
                 mqttdisconnected();
             }
             if (serial_str.includes("+MQD") && mqttOn) {
-                if (serial_str.includes(mqtt_topic)) mqttflag = true;
+                for (let i = 0; i <= topic_index ; i++){
+                    if (serial_str.includes(mqtt_topic_set[i])) {
+                        mqttflag = true;
+                        mqtt_topic = mqtt_topic_set[i];
+                        break;
+                    }
+                }
             }
             if (serial_str.includes("AT+") && ATcommend) {
                 let AT_pos: number = serial_str.indexOf("AT+");
-                let AT_str: string = serial_str.substr(AT_pos, 32); // to be modified
+                let AT_str: string = serial_str.substr(AT_pos,);
                 ATmessage(AT_str);
             }
             if (messaging) {
@@ -203,6 +209,8 @@ namespace ESP8266 {
 
     let serial_str: string = "";
     let mqtt_topic: string = "";
+    let mqtt_topic_set: string[];
+    let topic_index: number = 0;
     let ATcommend: boolean = false;
     let wificonn: boolean = false;
     let wifidisconn: boolean = false;
@@ -248,10 +256,9 @@ namespace ESP8266 {
     //%subcategory=MQTT
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
+        if (mqtt_topic.compare(topic) != 0) return;
         mqttOn = true;
-        mqtt_topic = topic;
         mqttmessage = body;
-
     }
 
     //%block="Serial read message"
@@ -291,6 +298,8 @@ namespace ESP8266 {
     //%subcategory=MQTT
     export function mqttsub(topic: string): void {
         serial.writeString("AT+MQSUBSCRIBE=\"" + topic + "\",1\r\n");
+        mqtt_topic_set.push(topic);
+        topic_index++;
         basic.pause(1000);
     }
 
