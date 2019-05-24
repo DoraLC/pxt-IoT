@@ -56,7 +56,8 @@ namespace ESP8266 {
             if (mqttflag) {
                 let mqttmeg_pos: number = serial_str.indexOf(mqtt_topic) + mqtt_topic.length
                 let mqttmeg: string = serial_str.substr(mqttmeg_pos + 3,)
-                mqttmessage(mqttmeg);
+                //mqttmessage(mqttmeg);
+                mqttCallback(mqtt_topic, mqttmeg)
                 mqttflag = false;
             }
         })
@@ -210,6 +211,7 @@ namespace ESP8266 {
     let serial_str: string = "";
     let mqtt_topic: string = "";
     let mqtt_topic_set: string[] = [""];
+    let mqttCallback: EvtTopic = null;
     let topic_index: number = 0;
     let ATcommend: boolean = false;
     let wificonn: boolean = false;
@@ -222,6 +224,7 @@ namespace ESP8266 {
 
     type EvtStr = (data: string) => void;
     type EvtAct = () => void;
+    type EvtTopic = (topic: string, data: string) => void;
 
     let wificonnected: EvtAct = null;
     let wifidisconnected: EvtAct = null;
@@ -252,13 +255,14 @@ namespace ESP8266 {
         ATmessage = body;
     }
 
-    //%block="MQTT receive from topic %topic"
+    //%block="On MQTT receive data"
     //%subcategory=MQTT
     //%draggableParameters
-    export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void): void {
+    export function mqttreceive(body: (topic: string, ReceivedMQTTMessage: string) => void): void {
         //mqttOn = true;
-        if (!topic.includes(mqtt_topic)) return;
-        mqttmessage = body;
+        //mqtt_topic = topic;
+        //mqttmessage = body;
+        mqttCallback = body;
     }
 
     //%block="Serial read message"
