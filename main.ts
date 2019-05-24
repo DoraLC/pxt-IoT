@@ -255,7 +255,7 @@ namespace ESP8266 {
     //%block="MQTT receive from topic %topic"
     //%subcategory=MQTT
     //%draggableParameters
-    export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
+    export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void): void {
         mqttOn = true;
         if (topic.compare(mqtt_topic) != 0) return;
         mqttmessage = body;
