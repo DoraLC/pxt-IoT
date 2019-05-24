@@ -38,7 +38,6 @@ namespace ESP8266 {
             }
             if (serial_str.includes("+MQD") && mqttOn) {
                 for (let i = 0; i <= topic_index ; i++){
-                    mqttflag = true;
                     if (serial_str.includes(mqtt_topic_set[i])) {
                         mqttflag = true;
                         mqtt_topic = mqtt_topic_set[i];
@@ -257,7 +256,7 @@ namespace ESP8266 {
     //%subcategory=MQTT
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void) {
-        if (mqtt_topic.compare(topic) != 0) return;
+        //if (mqtt_topic.compare(topic) != 0) return;
         mqttOn = true;
         mqttmessage = body;
     }
