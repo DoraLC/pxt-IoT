@@ -209,7 +209,7 @@ namespace ESP8266 {
 
     let serial_str: string = "";
     let mqtt_topic: string = "";
-    let mqtt_topic_set: string[];
+    let mqtt_topic_set: string[] = [""];
     let topic_index: number = 0;
     let ATcommend: boolean = false;
     let wificonn: boolean = false;
