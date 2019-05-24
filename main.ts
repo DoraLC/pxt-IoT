@@ -257,7 +257,7 @@ namespace ESP8266 {
     //%draggableParameters
     export function mqttreceive(topic: string, body: (ReceivedMQTTMessage: string) => void): void {
         //mqttOn = true;
-        if (topic.compare(mqtt_topic) == 0) mqttmessage = body;
+        if (topic.includes(mqtt_topic)) mqttmessage = body;
     }
 
     //%block="Serial read message"
