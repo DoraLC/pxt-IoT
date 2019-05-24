@@ -255,7 +255,7 @@ namespace ESP8266 {
         ATmessage = body;
     }
 
-    //%block="On MQTT receive data"
+    //%block="On MQTT received"
     //%subcategory=MQTT
     //%draggableParameters
     export function mqttreceive(body: (topic: string, ReceivedMQTTMessage: string) => void): void {
