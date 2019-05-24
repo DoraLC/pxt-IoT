@@ -22,7 +22,7 @@ namespace ESP8266 {
     export function initializeWifi(tx: SerialPin, rx: SerialPin, baudrate: BaudRate): void {
         serial.redirect(tx, rx, baudrate);
         serial.onDataReceived(serial.delimiters(Delimiters.NewLine), () => {
-            serial_str = serial.readString();
+            serial_str = serial.readLine();
 
             if (serial_str.includes("WIFI GOT IP\r\n") && wificonn) {
                 wificonnected();
