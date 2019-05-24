@@ -5,7 +5,7 @@ namespace ESP8266 {
     function setSerialBuffer(size: number): void {
         return null;
     }
-    setSerialBuffer(128);
+    setSerialBuffer(160);
 
     // -------------- Initialization ----------------
     /**
