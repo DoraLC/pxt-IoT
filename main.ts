@@ -334,12 +334,20 @@ namespace ESP8266 {
         return target.toString();
     }
 
-    //%block="WiFi connected" advanced=true
+    /**
+     * WiFi connection status, True for connected, false for disconnected.
+     */
+    //%block="WiFi connected"
+    //%advanced=true
     export function wificonnection(): boolean{
         return WIFIcon_flag;
     }
 
-    //%block="MQTT connected" advanced=true
+    /**
+     * MQTT broker connection status.
+     */
+    //%block="MQTT connected"
+    //%advanced=true
     export function MQTTconnection(): boolean {
         return MQTTcon_flag;
     }
