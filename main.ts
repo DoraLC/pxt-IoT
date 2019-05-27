@@ -344,7 +344,7 @@ namespace ESP8266 {
     }
 
     /**
-     * MQTT broker connection status.
+     * MQTT broker connection.
      */
     //%block="MQTT connected"
     //%advanced=true
