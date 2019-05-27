@@ -25,12 +25,14 @@ namespace ESP8266 {
             serial_str = serial.readString();
 
             if (serial_str.includes("WIFI GOT IP\r\n") && wificonn) {
+                WIFIcon_flag = true;
                 wificonnected();
             }
             if (serial_str.includes("WIFI DISCONNECT\r\n") && wifidisconn) {
                 wifidisconnected();
             }
             if (serial_str.includes("+MQSTATUS:MQTT CONNECTED\r\n") && mqttconn) {
+                MQTTcon_flag = true;
                 mqttconnected();
             }
             if (serial_str.includes("+MQSTATUS:MQTT CLOSED\r\n") && mqttdisconn) {
@@ -224,6 +226,9 @@ namespace ESP8266 {
     let mqttOn: boolean = false;
     let mqttflag: boolean = false;
 
+    let WIFIcon_flag: boolean = false;
+    let MQTTcon_flag: boolean = false;
+
     type EvtStr = (data: string) => void;
     type EvtAct = () => void;
     type EvtTopic = (topic: string, data: string) => void;
@@ -327,6 +332,16 @@ namespace ESP8266 {
     //%weight=0
     export function make_string(target: number): string {
         return target.toString();
+    }
+
+    //%block="WiFi connected" advanced=true
+    export function wificonnection(): boolean{
+        return WIFIcon_flag;
+    }
+
+    //%block="MQTT connected" advanced=true
+    export function MQTTconnection(): boolean {
+        return MQTTcon_flag;
     }
 
 }
