@@ -29,6 +29,7 @@ namespace ESP8266 {
                 wificonnected();
             }
             if (serial_str.includes("WIFI DISCONNECT\r\n") && wifidisconn) {
+                WIFIcon_flag = false;
                 wifidisconnected();
             }
             if (serial_str.includes("+MQSTATUS:MQTT CONNECTED\r\n") && mqttconn) {
@@ -36,6 +37,7 @@ namespace ESP8266 {
                 mqttconnected();
             }
             if (serial_str.includes("+MQSTATUS:MQTT CLOSED\r\n") && mqttdisconn) {
+                MQTTcon_flag = false;
                 mqttdisconnected();
             }
             if (serial_str.includes("+MQD")) {
